@@ -34,7 +34,12 @@ void basic_use()
     strcpy(args.str, "hahahaha");
     int rt;
 
-    /** 创建线程*/
+    /** 创建线程
+     *  参数1. 线程ID
+     *  参数2. 线程属性配置，如优先级
+     *  参数3. 执行函数
+     *  参数4. 执行函数的参数
+     */
     if((rt = pthread_create(&args.thread_id, NULL, basic_thread, &args)))
     {
         fprintf(stderr, "create thread error! error code is %d .\n", rt);
