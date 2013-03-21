@@ -22,22 +22,33 @@ void* basic_thread(void* args)
     // 该函数用于指明用于线程thread的存储空间可以在该线程终止后再利用
     // 如果thread未停止，pthread_detach()不会导致它终止
     // 对同一个线程多次调用pthread_detach()的行为未定义
-
     thread_args* arg = (thread_args*) args;
     printf("[thread %d]  output is : %s\n", arg->thread_id, arg->str);
-    return NULL;
+
+    return (void*)"finish";
 }
 
 void basic_use()
 {
     thread_args args;
     strcpy(args.str, "hahahaha");
+    int rt;
 
     /** 创建线程*/
-    if(pthread_create(&args.thread_id, NULL, basic_thread, &args))
+    if((rt = pthread_create(&args.thread_id, NULL, basic_thread, &args)))
     {
-        printf("create thread error!\n");
+        fprintf(stderr, "create thread error! error code is %d .\n", rt);
         return;
     }
-    usleep(1000);
+
+    void* value;
+    // 主线程等待新创建的线程结束
+    if((rt = pthread_join(args.thread_id, &value)))
+    {
+        fprintf(stderr, "thread_join fail. error code is %d .\n", rt);
+    }
+    else
+    {
+        printf("the return value of created thread is [%s] .\n", (char*) value);
+    }
 }
