@@ -63,7 +63,7 @@ void thread_local_use()
     /**
      * 创建一个 key
      * 参数1. 创建的 key 的值
-     * 参数2. 线程退出时调用的函数
+     * 参数2. 线程退出时调用的函数,可以来做一些清理工作
      */
     if(rt = pthread_key_create(&key, thread_exit))
     {
