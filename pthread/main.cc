@@ -11,5 +11,11 @@ int main()
     printf("\n--------> thread local usage\n");
     thread_local_use();
 
+    printf("\n--------> thread lock usage\n");
+    pthread_lock();
+
+    printf("\n--------> thread cond usage\n");
+    pthread_cond();
+
     return 0;
 }
