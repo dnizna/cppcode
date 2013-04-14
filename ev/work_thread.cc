@@ -18,7 +18,7 @@ static void async_handle_data(struct ev_loop* loop, struct ev_io* watcher, int r
   wthread->handle_data(loop, watcher, revents);
 }
 
-work_thread::work_thread()
+void work_thread::init()
 {
   int err;
   loop = ev_loop_new(0);
@@ -55,7 +55,7 @@ void work_thread::handle_data(struct ev_loop* loop, struct ev_io* watcher, int& 
   {
     if(ret > 0)
     {
-      printf("receive data is [%s]\n", buff);
+      printf("workthread[%d] fd[%d] receive data is: %s\n",pthread_self(), watcher->fd, buff);
     }
     else
     {
@@ -70,6 +70,10 @@ void work_thread::handle_request(EV_P_ ev_async* watcher, int& revents)
 {
   /** 获取到一个请求 */
   conn_item* conn = que.pop();
+  if(conn == NULL) 
+  {
+    return;
+  }
   /** 另外起一个watcher用来接收和处理数据*/
   ev_io* recv_watcher = (ev_io*)malloc(sizeof(ev_io));
   recv_watcher->data = this;

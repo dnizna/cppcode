@@ -27,7 +27,7 @@ class work_thread
     struct ev_async    async_watcher;
 
   public:
-    work_thread();
+    void init();
     /** 开始工作线程 */
     void start_work(conn_item* item);
     /** 处理请求 */

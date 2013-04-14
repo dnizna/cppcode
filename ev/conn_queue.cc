@@ -26,7 +26,7 @@ conn_item* conn_queue::pop()
   if(head == NULL)
     return NULL;
   pthread_mutex_lock(&lock);
-  conn_item* item = head->next;
+  conn_item* item = head;
   head = head->next;
   pthread_mutex_unlock(&lock);
   return item;

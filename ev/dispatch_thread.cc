@@ -13,6 +13,9 @@ dispatch_thread::dispatch_thread()
 {
   loop = ev_default_loop(0);
   current_thread = 0;
+
+  for(int i = 0; i < NUM_OF_WORK_THREAD; ++i)
+    wthread[i].init();
 }
 
 void dispatch_thread::start(int listenfd)
@@ -44,6 +47,7 @@ void dispatch_thread::call_back(struct ev_loop* loop, ev_io* w, int revents)
       fprintf(stderr, "accept fd[%d] fail.\n", w->fd);
     }
   }
+  printf("receive one request fd[%d].\n", accept_fd);
   /** 选择一个工作线程分发*/
   int index = ++current_thread % NUM_OF_WORK_THREAD;
   conn_item* item = (conn_item*)malloc(sizeof(conn_item));
