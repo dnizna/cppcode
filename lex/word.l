@@ -7,9 +7,11 @@ struct pwc
   int lines;
 };
 %}
+// 用户数据类型
 %option extra-type="struct  pwc*"
 %%
 
+// 传入用户数据实例，yyextra是一个宏
 %{
   struct pwc* pp = yyextra;
 %}
@@ -24,6 +26,7 @@ main()
 {
   struct pwc mypwc = {0,0,0};
   yyscan_t scanner;
+  // 初始化用户数据和scanner
   if(yylex_init_extra(&mypwc, &scanner))
   {
     fprintf(stderr, "init yylex extra fail.\n");
@@ -32,7 +35,6 @@ main()
 
   yyset_in(stdin, scanner);
   yylex(scanner);
-  printf("chars is %d.\t words is %d.\t lines is %d.\n", mypwc.chars, mypwc.words, mypwc.lines);
   yylex_destroy(scanner);
 }
 
