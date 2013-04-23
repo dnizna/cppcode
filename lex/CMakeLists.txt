@@ -10,3 +10,7 @@ exec_program(lex ARGS "-ocalc.c ../calc.l")
 add_executable(calc calc.c y.tab.c y.tab.h)
 target_link_libraries(calc l)
 #target_link_libraries(calc y)
+
+exec_program(lex ARGS "-oword.c ../word.l")
+add_executable(word "word.c")
+target_link_libraries(word l)
