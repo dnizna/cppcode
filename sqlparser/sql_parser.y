@@ -28,7 +28,6 @@
 create_table_stmt:
   CREATE TABLE relation_factor '(' table_element_list ')' END_P
   { 
-    puts("CREATE TABLE NAME");
     ParserNode* table = (ParserNode*) malloc(sizeof(ParserNode));
     table->num = 2;
     table->item = T_CREATE_TABLE;

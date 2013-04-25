@@ -20,7 +20,6 @@ FLOAT  { return FLOAT; }
   node->num = 0;
   node->item = T_IDENTIFY;
   strcpy(node->attrstr, yytext);
-  puts(yytext);
   return NAME;
 }
 
