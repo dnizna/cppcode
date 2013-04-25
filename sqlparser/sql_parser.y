@@ -5,6 +5,7 @@
 %verbose
 %{
 #include "sql_node.h"
+#include <stdarg.h>
 #define YYDEBUG 1 
 %}
 
@@ -19,21 +20,23 @@
 #define YYLEX_PARAM result->scanner
 %}
 
-%token CREATE TABLE FLOAT VARCHAR INTEGER
+%token CREATE TABLE FLOAT VARCHAR INT END_P
 %token <node> NAME
 %type <node> create_table_stmt relation_factor table_element_list column_definition data_type
 %%
 
 create_table_stmt:
-  CREATE TABLE relation_factor '(' table_element_list ')'
-  {
+  CREATE TABLE relation_factor '(' table_element_list ')' END_P
+  { 
+    puts("CREATE TABLE NAME");
     ParserNode* table = (ParserNode*) malloc(sizeof(ParserNode));
     table->num = 2;
     table->item = T_CREATE_TABLE;
     table->child = (ParserNode**) malloc(sizeof(ParserNode) * 2);
     table->child[0] = $3;
     table->child[1] = $5;
-    $$ = table; 
+    result->node = table;
+    YYACCEPT;
   }
   ;
 
@@ -73,7 +76,7 @@ column_definition:
   ;
 
 data_type:
-  INTEGER
+  INT
   {
     ParserNode* node = (ParserNode*)malloc(sizeof(ParserNode));
     node->item = T_TYPE_INT;
@@ -97,6 +100,12 @@ data_type:
 
 void yyerror(YYLTYPE* yyloc, ParserResult* p, char* s, ...)
 {
+  puts("error");
+  va_list ap;
+  char buff[1000];
+  va_start(ap, s);
+  vsnprintf(buff, 1000, s, ap);
+  printf("%s\n", buff);
 }
 
 /** 语法解析调用入口*/

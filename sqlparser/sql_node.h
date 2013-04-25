@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-enum SqlItemType
+typedef enum
 {
   T_CREATE_TABLE,
   T_TYPE_VARCHAR,
@@ -15,21 +15,21 @@ enum SqlItemType
 
   TABLE_ELEMENT,
   TABLE_COLUMN,
-};
+} SqlItemType;
 
-struct ParserNode
+typedef struct _ParserNode
 {
-  struct ParserNode** child;
-  char*        attrstr;
+  struct _ParserNode** child;
+  char        attrstr[100];
   int          num;
 
-  enum SqlItemType  item;
-};
+  SqlItemType  item;
+} ParserNode;
 
 typedef struct 
 {
   void* scanner;
-  struct ParserNode* node;
+  ParserNode* node;
 } ParserResult;
 
 #ifdef __cplusplus

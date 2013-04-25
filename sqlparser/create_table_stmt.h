@@ -13,10 +13,6 @@ struct ColumnNode
   char        value[MAX_LEN];
 };
 
-
-
-
-
 class CreateTableStmt
 {
   public:
@@ -35,7 +31,7 @@ class CreateTableStmt
       strcpy(table_name, name);
     }
     
-    ColumnNode& get_column(int index) const
+    const ColumnNode& get_column(int index) const
     {
       return columns[index];
     }
