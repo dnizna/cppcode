@@ -8,13 +8,22 @@
 
 CREATE { return CREATE; }
 TABLE  { return TABLE; }
-[A-Z_][A-Za-z_]* {
+INT    { return INT; }
+VARCHAR {return VARCHAR; }
+FLOAT  { return FLOAT; }
+
+<<EOF>> { return END_P; }
+
+[a-z]* {
   ParserNode* node = (ParserNode*) malloc(sizeof(ParserNode));
   yylval->node = node;
   node->num = 0;
   node->item = T_IDENTIFY;
   strcpy(node->attrstr, yytext);
+  puts(yytext);
   return NAME;
 }
 
 [\r\n\t ] {} 
+
+. { return yytext[0]; }
