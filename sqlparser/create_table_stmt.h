@@ -13,6 +13,10 @@ struct ColumnNode
   char        value[MAX_LEN];
 };
 
+
+
+
+
 class CreateTableStmt
 {
   public:
