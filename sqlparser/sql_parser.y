@@ -1,8 +1,9 @@
 %define api.pure
-%parse-param {ParseResult* result}
+%parse-param {ParserResult* result}
 
 %{
 #include "sql_node.h"
+#include "sql_parser.lex.h"
 %}
 
 // 指定yyval的类型

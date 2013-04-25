@@ -1,3 +1,4 @@
+%option header-file="sql_parser.lex.h"
 %{
 #include "sql_node.h"
 %}
