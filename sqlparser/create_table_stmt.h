@@ -48,6 +48,28 @@ class CreateTableStmt
       column_num++;
     }
     
+    void print()
+    {
+      printf("table name is : %s\n", table_name);
+      printf("column is :\n");
+      for(int i = 0; i< column_num; ++i)
+      {
+        switch(columns[i].type)
+        {
+          case T_TYPE_INT:
+            printf("\t\ttype : INT      name : %s\n", columns[i].value);
+            break;
+          case T_TYPE_VARCHAR:
+            printf("\t\ttype : VARCHAR  name : %s\n", columns[i].value);
+            break;
+          case T_TYPE_FLOAT:
+            printf("\t\ttype : FLOAT    name : %s\n", columns[i].value);
+            break;
+        }
+      }
+      puts("\n");
+    }
+    
   private:
     char table_name[MAX_LEN];
 
